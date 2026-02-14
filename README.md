@@ -1,1 +1,1 @@
-# PostgreSQL_Optimization5.0._Aristov(2026)
+# PostgreSQL Optimization 5.0. Aristov(2026)
