@@ -1,1 +1,1 @@
-#Курс PostgreSQL Optimization 5.0. Aristov(2026)
+# Курс PostgreSQL Optimization 5.0. Aristov(2026)
