@@ -93,11 +93,11 @@ max_parallel_maintenance_workers = 2
 systemctl restart postgresql
 
 sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
-# 471
+# 621
 sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
-# 382
+# 613
 sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
-# 340
+# 460
 ```
 
 4.0. **Настройка максимальной производительности не обращая внимания на ACI~~D~~**
