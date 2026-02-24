@@ -110,7 +110,7 @@ sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
 # 
 ```
 
-5.0. **Замедляем в 100500 разпо мотивам статьи <.....> **
+5.0. **Замедляем в 100500 разпо мотивам статьиhttps://habr.com/ru/companies/postgrespro/articles/940006/**
 ```bash
 su - postgres
 vim $PGDATA/postgresql.conf
