@@ -42,27 +42,27 @@ cat /sys/kernel/mm/transparent_hugepage/enabled
 2.1. Простой
 ```bash
 sudo -iu postgres pgbench -i postgres
-sudo -iu pgbench -P 1 -T 20 postgres
-# 
-sudo -iu pgbench -P 1 -c 10 -j 4 -T 20 postgres
-# 
+sudo -iu postgres pgbench -P 1 -T 20 postgres
+# 594
+sudo -iu postgres pgbench -P 1 -c 10 -j 4 -T 20 postgres
+# 613
 ```
 
 2.2. Расширенный
 ```bash
 sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
-# 
+# 626
 sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
-# 
+# 631
 sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
-# 
+# 511
 ```
 
 3.0. **Настройка оптимальной производительности**
 ```bash
 # Tuning PG
 su - postgres
-vim $PGDATA/postgresql.conf
+vim postgresql.conf
 
 # DB Version: 18
 # OS Type: linux
@@ -90,12 +90,14 @@ max_parallel_workers_per_gather = 2
 max_parallel_workers = 4
 max_parallel_maintenance_workers = 2
 
-sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 10 postgres
-# 
-sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 10 postgres
-# 
-sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 10 postgres
-# 
+systemctl restart postgresql
+
+sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
+# 471
+sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
+# 382
+sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
+# 340
 ```
 
 4.0. **Настройка максимальной производительности не обращая внимания на ACI~~D~~**
@@ -105,17 +107,17 @@ sudo -iu postgres psql -c "ALTER SYSTEM SET synchronous_commit = off;"
 sudo -iu postgres psql -c "SELECT pg_reload_conf();"
 
 sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
-# 
+# 2813
 sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
-# 
+# 2451
 sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
-# 
+# 2000
 ```
 
-5.0. **Замедляем в 100500 разпо мотивам статьи [Замедляю Postgres в 42 000 раз, потому что мне нечем больше заняться](https://habr.com/ru/companies/postgrespro/articles/940006/)**
+5.0.* **Замедляем в 100500 раз по мотивам статьи [Making Postgres 42,000x slower because I am unemployed](https://byteofdev.com/posts/making-postgres-slow/)**
 ```bash
 su - postgres
-vim $PGDATA/postgresql.conf
+vim postgresql.conf
 
 shared_buffers = 8MB
 autovacuum_vacuum_insert_threshold = 1
@@ -132,7 +134,7 @@ autovacuum_analyze_scale_factor = 0
 maintenance_work_mem = 128kB
 log_autovacuum_min_duration = 0
 logging_collector = on
-log_destination = stderr,jsonlog
+log_destination = stderr
 wal_writer_flush_after = 0
 wal_writer_delay = 1
 min_wal_size = 32MB
@@ -150,10 +152,12 @@ cpu_index_tuple_cost = 1e300
 io_method = worker
 io_workers = 1
 
+systemctl restart postgresql
+
 sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
-# 
+# 52
 sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
-# 
+# 53
 sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
-# 
+# 45
 ```
