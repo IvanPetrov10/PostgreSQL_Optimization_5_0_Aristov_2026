@@ -32,8 +32,10 @@ vm.swappiness=1
 
 # transparent_hugepage - отключить
 cat /sys/kernel/mm/transparent_hugepage/enabled
+#always [madvise] never
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 cat /sys/kernel/mm/transparent_hugepage/enabled
+#always madvise [never]
 ```
 2.0. **Первичный бенчмарк**
 
