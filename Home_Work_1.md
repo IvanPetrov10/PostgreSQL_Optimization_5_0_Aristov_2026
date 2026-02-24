@@ -43,52 +43,25 @@ cat /sys/kernel/mm/transparent_hugepage/enabled
 ```bash
 sudo -iu postgres pgbench -i postgres
 sudo -iu postgres pgbench -P 1 -T 20 postgres
-# 594
-sudo -iu postgres pgbench -P 1 -c 10 -j 4 -T 20 postgres
-# 613
+# 572
+sudo -iu postgres pgbench -P 1 -c 20 -T 20 postgres
+# 614
 ```
 
 2.2. Расширенный
 ```bash
 sudo -iu postgres pgbench -P 1 -c 20 -j 4 -T 20 postgres
-# 626
+# 572
 sudo -iu postgres pgbench -P 1 -c 40 -j 4 -T 20 postgres
-# 631
+# 634
 sudo -iu postgres pgbench -P 1 -c 80 -j 4 -T 20 postgres
-# 511
+# 605
 ```
 
 3.0. **Настройка оптимальной производительности**
 ```bash
-# Tuning PG
-su - postgres
+# Tuning PG https://pgconfigurator.cybertec.at/
 vim postgresql.conf
-
-# DB Version: 18
-# OS Type: linux
-# DB Type: web
-# Total Memory (RAM): 16 GB
-# CPUs num: 4
-# Connections num: 100
-# Data Storage: ssd
-
-max_connections = 100
-shared_buffers = 4GB
-effective_cache_size = 12GB
-maintenance_work_mem = 1GB
-checkpoint_completion_target = 0.9
-wal_buffers = 16MB
-default_statistics_target = 100
-random_page_cost = 1.1
-effective_io_concurrency = 200
-work_mem = 40329kB
-huge_pages = off
-min_wal_size = 1GB
-max_wal_size = 4GB
-max_worker_processes = 4
-max_parallel_workers_per_gather = 2
-max_parallel_workers = 4
-max_parallel_maintenance_workers = 2
 
 systemctl restart postgresql
 
