@@ -26,7 +26,7 @@ sudo apt update \
 
 ```bash
 ## Tuning OS
-# wapiness 60-> 1
+# swapiness 60 -> 1
 vim /etc/sysctl.conf
 vm.swappiness=1
 
